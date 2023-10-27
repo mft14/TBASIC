@@ -1,0 +1,414 @@
+2 dim d$(50,21),k$(21),f$(21)
+3 h:print:print:print:print
+4 p=0
+7 h
+9 g0,1:g1,2,5:g4,1
+10 print chr$(14)
+11 fori=1 to 40:print"-";:next:printchr$(27)""
+12 print"        A PROGRAMME BY TOM KIEL"
+13 fori=1 to 40:print"-";:next:printchr$(27)""
+14 r=0
+25 y1,"v":y2,"r":y8,"m"
+26 y4,t$+chr$(13)
+30 remscnclr
+31 f=0
+32 k$(1)="                       date "
+33 k$(2)="20 "
+34 k$(3)="19 "
+35 k$(4)="18 "
+36 k$(5)="17 "
+37 k$(6)="16 "
+38 k$(7)="15 "
+39 k$(8)="14 "
+40 k$(9)="13 "
+41 k$(10)="12 "
+42 k$(11)="11 "
+43 k$(12)="10 "
+44 k$(13)=" 9 "
+45 k$(14)=" 8 "
+46 k$(15)=" 7 "
+47 k$(16)=" 6 "
+48 k$(17)=" 5 "
+49 k$(18)=" 4 "
+50 k$(19)=" 3 "
+51 k$(20)=" 2 "
+52 k$(21)=" * "
+53 print chr$(14)
+60 print"MEX 21-SORT PRG"
+70 print"---------------"
+80 print
+90 print" 1   load"
+100 print
+110 print" 2   save"
+120 print
+130 print" 3   write"
+140 print
+141 print" 4   read"
+142 print
+150 print" 5   erase"
+160 print
+165 print" 6   seek"
+166 print
+167 print" 7   end"
+172 if z=0 then 174
+173 print:print"       file "t$
+174 print:print"       please select  1 -> 7 "
+175 getyh$
+176 if h$=chr$(13)thenh$="0":goto175
+178 f=val(h$)
+200 if f <=0 or f>7then gosub 40000
+210 on val(h$)goto 5000,10000,15000,20000,25000,60000,30000
+250 goto10
+5000 h
+5001 c=1
+5008 print"PLEASE FILENAME !    (19)YY     *=MENU"
+5009 print:input"  ";t$
+5010 h
+5012 if t$="*"then 10
+5013 if t$=""then gosub40000:goto10
+5017 h
+5030 open 1,8,2,"vc"+t$
+5040 input#1,z
+5050 for y=1 to z
+5055 print"SEARCHING FILE "t$" record #"y" ";"of"z
+5060 for i=1 to 21
+5070 input#1,d$(y,i)
+5075 if st=64 then 5100
+5080 next i
+5090 next y
+5100 close 1
+5105 h
+5110 if ds$="00, ok,00,00"then5160
+5111 if ds$<>"00, ok,00,00"then print"   THERE IS NO FILE "t$
+5112 for t=1 to 5000:next
+5113 t$="":z=0:goto10
+5160 goto50000
+10000 h
+10001 rem===============================
+10002 rem       save file
+10003 rem===============================
+10011 p$=""
+10020 if z=0 then 10040
+10030 goto 10100
+10040 h:print"   cannot save nothing "
+10060 for t=1 to 3000:next
+10090 goto 10
+10100 if t$=""then10110
+10105 goto10120
+10110 h:print"  write new filename!"
+10115 print:print:input"   ";t$
+10120 ift$=""then10100
+10125 ift$="*"then35000
+10130 ift$=chr$(32)then10100
+10131 print"O.K. ERASING FILE  Y/N  "
+10135 getygd$:ifgd$<>"y"then10
+10165 h:print" ERASING OLD FILE "t$
+10170 r"vc"+t$:goto 10210
+10210 h:
+10220 open 1,8,2,"vc"+t$+",s,w"
+10230 print#1,z
+10240 for y=1 to z
+10245 print"SAVING FILE "t$"   record # "y
+10250 for i=1 to 21
+10260 print#1,d$(y,i)
+10270 next i
+10280 next y
+10290 close 1
+10291 p=0
+10300 remif ds$<>"00, ok,00,00"then10320
+10310 goto 10360
+10320 print"  file exists !"
+10340 for t=1 to 3000:next
+10350 close 1:goto10
+10360 h
+10370 print:print:print:print:print:print"           SAVING FILE "t$
+10390 print:print"  READY SAVING FILE "t$
+10395 print"           press space !!"
+10400 gety b$:if b$<>chr$(32)then10400
+10410 s=2:goto10
+15000 h
+15001 rem===============================
+15002 rem      write file
+15003 rem===============================
+15004 if p=0then p=p+1
+15010 z=z+1
+15020 rem
+15030 print" write file      file "t$"      page"z:print
+15060 for i=1 to 21
+15065 printk$(i);
+15070 input d$(z,i)
+15080 next
+15090 `0,0,24,"            input right   ? y/n"
+15100 gety x$
+15110 if x$<>"y"and x$<>"n"then 15100
+15120 if x$="y"then 15140
+15130 if x$="n"then z=z-1:goto10
+15140 x$=""
+15150 `0,0,24,"             next page    ? y/n  "
+15160 gety x$
+15170 if x$<>"y"and x$<>"n"then15160
+15180 if x$="y"then 15000
+15190 if x$="n"then 50000
+20000 rem =========================
+20010 rem  change datas
+20020 rem =========================
+20030 zz=1
+20031 y4,"h":y5,"j":y3,"a"
+20040 ifz<1then20045
+20044 goto20050
+20045 `0,0,24,"no datas available"
+20046 fort=1 to 2000:next:goto10
+20050 h
+20060 remifz=0thengosub500:goto1000
+20065 remprint"            -change files-":print
+20066 print"FILE "t$"  PAGE"zz"of"z"  DATE:"d$(zz,1)
+20067 print"----------------------------------------"
+20070 for i=2 to 21
+20080 print k$(i);d$(zz,i)
+20090 next
+20091 print"----------------------------------------"
+20092 remprint"page"zz"of"z "      page x press f5"
+20093 print"F1=> F2=< F3=ch. F4=LIST PX=F5  F8=MENU"
+20100 get x$:if x$="" then 20100
+20101 ifx$<>"v"andx$<>"r"andx$<>"a"andx$<>"m"andx$<>"h"andx$<>"j"then20100
+20110 if x$="m" then 10
+20120 if x$="v" and zz<z then zz=zz+1:goto 20040
+20125 if x$="r" and zz>1then zz=zz-1:goto20040
+20130 if x$="r" and zz=1then zz=z:goto20040
+20131 if x$="h"then 50000
+20140 if x$="a" then 20155
+20141 if x$="j"then20143
+20142 goto20150
+20143 print"page x  ( 1 -"z")";
+20144 input"";g:if g<0then20220
+20145 if g>zthen20220
+20146 w=g-1
+20147 zz=1
+20148 zz=zz+w:goto20040
+20150 fe$="input error ?!":gosub200:goto20100
+20155 input"record # ? (1-21)";x
+20156 ifx=21thenx=1:goto20180
+20157 ifx=20thenx=2:goto20180
+20158 ifx=19thenx=3:goto20180
+20159 ifx=18thenx=4:goto20180
+20160 ifx=17thenx=5:goto20180
+20161 ifx=16thenx=6:goto20180
+20162 ifx=15thenx=7:goto20180
+20163 ifx=14thenx=8:goto20180
+20164 ifx=13thenx=9:goto20180
+20165 ifx=12thenx=10:goto20180
+20166 ifx=10thenx=12:goto20180
+20167 ifx=9thenx=13:goto20180
+20168 ifx=8thenx=14:goto20180
+20169 ifx=7thenx=15:goto20180
+20170 ifx=6thenx=16:goto20180
+20171 ifx=5thenx=17:goto20180
+20172 ifx=4thenx=18:goto20180
+20173 ifx=3thenx=19:goto20180
+20174 ifx=2thenx=20:goto20180
+20175 ifx=1thenx=21:goto20180
+20180 if x<1 or x>21then print chr$(145);:goto 20170
+20190 rem
+20200 input"new input   ";d$(zz,x)
+20210 goto 20040
+20220 h:print:print:print:print:print"       maybe you cannot read ?   "
+20221 print:print:print"         record #"zz"of"z"?"
+20222 print:print"     and your input"g"now what?"
+20223 for t=1 to 5000:next t:goto20000
+25000 rem ===================
+25010 rem   erase datas
+25019 rem ===================
+25020 rem
+25021 rem
+25022 h
+25023 remgoto 55000
+25025 remgoto10
+25030 h
+25040 print:print
+25050 if z=0 then 10
+25060 print:print:input" WRITE WHAT DATE";d1$
+25070 ifq$<>"y"then h
+25080 x=1
+25090 if d$(x,1)=d1$ then 25130
+25100 if x<z then x=x+1: goto 25090
+25110 fe$=" file not found  !"
+25111 print:print" file not found  !"
+25112 for t=1 to 1000:next t
+25120 goto 10
+25130 print"            "d$(x,1)
+25135 print"----------------------------------------"
+25140 for i=2 to 21
+25150 print k$(i);d$(x,i)
+25160 next
+25165 print"----------------------------------------"
+25170 ifq$="y"thenprint" erasing record #"x" "d$(x,1)
+25180 ifq$<>"y"then25200
+25185 for t=1 to 1000:next
+25190 goto25220
+25200 print"erasing or menu  e/m ";
+25210 getyqw$:ifqw$<>"e"andqw$<>"m"then25210
+25215 ifqw$="m"thenprint:print:goto10
+25220 for y=x to z-1
+25230 for i=1 to 21
+25240 d$(y,i)=d$(y+1,i)
+25250 next i
+25260 next y
+25270 z=z-1
+25275 ifq$="y"thenprint:goto55013
+25280 goto 50000
+30000 rem===============================
+30001 rem        end file
+30002 rem===============================
+30009 if z=0 then 30090
+30010 print:print"       did you save all ? y/n";
+30020 gety x$:if x$<>"y"and x$<>"n"then30040:U 30070
+30021 if x$=chr$(32)then 30040
+30022 if x$=""then30040
+30030 goto 30000
+30040 print:print:print:print:print"          type  'y' or 'n'"
+30050 for t=1 to 3000:next
+30055 goto30010
+30060 goto 10
+30070 if x$="n"then s=1:goto 10
+30075 if x$=chr$(32)then 30040
+30080 if x$="y"then 30085
+30081 goto30090
+30085 if p=1 then10000
+30090 h
+30110 print:print:print
+30120 print"         start programme again "
+30130 print
+30140 print"       type goto 30000 + return"
+30150 print:print:print
+30160 y1,"dL"+chr$(34):y2,"dS"+chr$(34):y8,"?ds$"+chr$(13)
+30170 y4,"scN"+chr$(13)+"diR"+chr$(13)
+30175 y5,"scR"+chr$(34):y3,"lI"
+30176 y6,"rU"+chr$(13):y7,"lI"+chr$(13)
+30180 end
+35000 h:print"  don't use the joker >*< as filename"
+35010 fort=1to5000:next
+35020 t$="":goto10
+40000 h:print"? "h$" ? now what":print
+40005 for t=1 to 2000:next t
+40006 print
+40010 return
+41000 h:`0,10,14,"type 'y' or 'n'"
+41010 for t=1 to 2000:next
+41020 return
+42000 h:print"  loading no file     "
+42010 for t=1 to 3000:next
+42020 return
+50000 h:print"      "z" TOP TWENTIES AVAILABLE":print:print
+50001 s=0:q$="":o$=""
+50002 remd1$="":d2$="":d3$=""
+50010 for y=1 to z
+50019 print d$(y,1)tab(10)"."d$(y,21):print
+50020 s=s+1
+50021 if s=z then 50065
+50022 if s=9 then 50025
+50023 goto50060
+50025 print:print:print"    R=REPEAT   HELP=MENU   C=CHANGE"
+50026 getym$:ifm$<>chr$(32)andm$<>"c"andm$<>"r"andm$<>"m"then50026
+50027 h
+50028 ifm$=chr$(32)thens=0:goto50060
+50029 ifm$="r"then50001
+50030 ifm$="c"then55000
+50031 ifm$="m"then10
+50060 next y
+50065 print:print:print"    R=REPEAT   HELP=MENU   C=CHANGE"
+50070 getyj$:ifj$<>"m"andj$<>"c"andj$<>"r"then50070
+50071 if j$="r"then50000
+50072 ifj$="c"then55000
+50073 ifj$="m"then y3,"lI":goto10
+50074 remif j$=chr$(32)then55010
+55000 rem ===================
+55001 rem    add  datas
+55002 rem ===================
+55003 g=0
+55007 print:input"do you want a loop y/n ";q$:print
+55010 ifq$="y"then l=0
+55011 remifq$="y"thenprint:input" year ";d1$:print:print
+55012 remif g=lthen 50000
+55013 for y=1 to z
+55014 print"       "y"    "tab(16)d$(y,1)
+55015 next y:ifq$="y"and g=0 then print:input" how many turns";l
+55016 if q$="y"and g=l then 50000
+55017 if q$="y"and l>0 then 55019
+55019 if q$="y"then55025
+55020 gety y$:if y$<>chr$(32)then50000
+55025 ifq$="y"then 55070:U55059
+55059 rem
+55060 ifq$="n"then print:input " WRITE DATE     ";d1$
+55070 ifq$="y"then x=1:goto55130
+55071 remgoto 55080
+55072 x=1
+55073 ifd$(x,1)=d1$ then 55130
+55074 if x<z then x=x+1: goto 55073
+55080 x=1:
+55090 if d$(x,1)=d1$ then 55130
+55100 if x<z then x=x+1: goto 55090
+55110 fe$=" file not found  !"
+55120 goto 10
+55130 print:print:remprint"               "d$(x,3)"."d$(x,2)"."d$(y,1)
+55135 remprint"----------------------------------------":print
+55140 remfor i=4 to 8
+55150 remprint k$(i);d$(x,i)
+55160 remnext
+55165 remprint:print"----------------------------------------":print
+55170 print:print:print"shifting record #"x" "d$(x,1)" to #"z
+55200 if q$="y"then g=g+1
+55210 if q$="y"then print:print"turn #"g"of"l:print:print
+55220 for y=x to x+1
+55230 for i=1 to 21
+55240 d$(z+1,i)=d$(x,i)
+55250 nexti:nexty
+55260 for y=x+1 to z+1
+55270 for i=1 to 21
+55280 d$(y,i)=d$(y,i)
+55290 next i
+55300 next y
+55310 z=z+1
+55315 ifq$="y"then25130
+55320 goto 25070
+60000 h
+60010 g0,1:g1,2,5:g4,1
+60020 print"searching what ?"
+60030 ifz<1thenprint"year 19xx ";
+60040 ifz<1theninput"  ";t$:gosub60310:goto3
+60050 ifz>1thenprint"month     m  "
+60060 ifz>1thenprint"charts    * "
+60070 gety x$:ifx$<>"*"andx$<>"m"then60070
+60080 ifx$="m"then60110
+60090 ch$="":da$="":mo$=""
+60100 ifx$="*"thench$="*":goto60130
+60110 ch$="":da$="":mo$=""
+60120 print"":input"  month   ";mo$
+60130 for y=1 to z
+60140 s=0
+60150 ifch$=""then60180
+60160 ifch$=right$(d$(y,1),1)thens=s+1
+60170 remifda$=left$(d$(y,1),2) ormo$=mid$(d$(y,1),4,3)thens=s+1
+60180 ifmo$=mid$(d$(y,1),4,3)thens=s+1
+60190 ify>zthenprint"  file not found":fort=1to2000:next:goto10
+60200 ifs<>1then60280
+60210 h
+60220 fori=1 to 21
+60230 printk$(i);d$(y,i)
+60240 next i
+60250 print"space search or end       record #"y
+60260 getyx$:ifx$<>chr$(32)andx$<>"s"andx$<>"e"then60260
+60270 ifx$="s"then60000
+60280 ifx$="e"theny=z:goto10
+60290 next y
+60300 goto10
+60310 ift$="*"thengosub61160:zx=25:goto1
+60320 open1,8,2,"vc"+t$
+60330 input#1,z
+60340 close1,8,2
+60350 zx=z+5
+60360 goto10
+
+ready.
+
+
+

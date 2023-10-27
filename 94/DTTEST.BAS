@@ -1,0 +1,140 @@
+10 CLS:P=0:S=0:COLOR 0,11
+12 KEY 1,"V":KEY 2,"R":KEY 3,"C":KEY 5,"H":
+13 KEY 9,CHR$(162):KEY 10,CHR$(163)
+14 KEY 6,CHR$(160):KEY 7,CHR$(130):KEY 8,CHR$(161)
+15 DIM D$(1200,2)
+16 K$(1)="GERMAN"
+17 K$(2)="TAGALOG"
+20 CHDIR "WORDS"
+30 F$="WORDS.TXT"
+40 OPEN F$ FOR INPUT AS #1
+50 INPUT#1,Z
+60    FOR Y=1 TO Z
+70       FOR I=1 TO 2
+80       LINE INPUT#1,D$(Y,I)
+90       NEXT I
+95    NEXT Y
+96 CLOSE#1
+97 X$="2"
+100 CLS
+110 ?:?
+120 ?"                                   JOB MENU"
+145 ?:?
+150 ?"                                   WRITE  -1-"
+155 ?:?
+160 ?"                                   TEST   -2-"
+165 ?:?
+166 ?"                                   CHANGE -3-"
+167 ?:?
+170 ?"                                   END    -4-"
+180 ?:?:?
+190 ?"                              PLEASE SELECT  (1-4)"
+200 X$=INKEY$:IF X$="" THEN 200
+210 IF X$="1"THEN 400
+220 IF X$="2"THEN 500
+230 IF X$="3"THEN 700
+240 IF X$="4"THEN 300
+250 GOTO 190
+300 CLS
+310 ?:?:?"                            SAVING NEW WORDS"
+315 F$="Dtsch"
+320 OPEN F$ FOR OUTPUT AS #1
+330 PRINT#1,Z
+340    FOR Y=1 TO Z
+350       FOR I=1 TO 1
+360       PRINT#1,D$(Y,I)
+370       NEXT I
+380    NEXT Y
+385 CLOSE#1
+390 ?:?:?"                         READY SAVING NEW WORDS    "
+392 ?:?"                                PRESS SPACE"
+394 X$=INKEY$:IF X$<>CHR$(32)THEN 394
+396 P=0:End
+398 GOTO 100
+400 CLS:P=1
+410 ?:?:?"                            WRITE NEW WORDS:"
+420 ?:?"                             GERMAN  TAGALOG   ";Z
+422 ?:?
+425 Z=Z+1
+430 FOR I=1 TO 2
+435 ?:? I;K$(I);
+440 INPUT D$(Z,I)
+445 IF D$(Z,I)=""THEN D$(Z,I)="---"
+450 NEXT I
+455 ?:?:?"                           INPUT O.K.    Y/N  ?"
+460 X$=INKEY$:IF X$<>"Y" AND X$<>"y" AND X$<>"N" AND X$<>"n" THEN 460
+465 IF X$="N" OR X$="n"THEN Z=Z-1:GOTO 100
+470 ?:?:?"                           NEXT PAGE     Y/N  ?"
+475 X$=INKEY$:IF X$<>"Y" AND X$<>"y" AND X$<>"N" AND X$<>"n" THEN 475
+477 S=S+1
+478 IF S>4 THEN S=0:GOTO 300
+480 IF X$="Y" or x$="y"THEN 400
+485 GOTO 100
+500 CLS:?:?:INPUT"                          TYPE ANY NUMBER FROM 1 UP TO 30000";Y
+503 RANDOMIZE Y
+504 CLS
+505 ?:?:?"                    GERMAN TAGALOG -> G   TAGALOG GERMAN -> T"
+506 X$=INKEY$:IF X$="" THEN 506
+507 IF X$="T" or x$="t"THEN 550
+510 Y=INT(RND*Z)+1
+515 ?:?:?"                    "D$(Y,1)"         # "Y
+520 ?:INPUT"                           YOUR IDEA ?";D1$
+525 IF D1$=D$(Y,2) THEN PRINT:PRINT"                          YOU ARE RIGHT !     HERE IT IS: "D$(Y,2)
+526 IF D1$<>D$(Y,2)THEN PRINT:PRINT"                          YOU ARE WRONG !     HERE IT IS: "D$(Y,2)
+530 ?:?:?"                            NEXT ONE  Y/N ?"
+535 X$=INKEY$:IF X$<>"Y" AND X$<>"y" AND X$<>"n" AND X$<>"N" THEN 535
+540 IF X$="Y" OR X$="y" THEN CLS:GOTO 510
+545 IF X$="N" OR X$="n" THEN 100
+550 Y=INT(RND*Z)+1
+555 ?:?:?"                    "D$(Y,2)"         # "Y
+560 ?:INPUT"                           YOUR IDEA ?";D2$
+565 IF D2$=D$(Y,1) THEN PRINT:PRINT"                           YOU ARE RIGHT ! HERE IT IS: "D$(Y,1)
+566 IF D2$<>D$(Y,1)THEN PRINT:PRINT"                           YOU ARE WRONG ! HERE IT IS: "D$(Y,1)
+570 ?:?:?"                            NEXT ONE  Y/N ?"
+575 X$=INKEY$:IF X$<>"Y" AND X$<>"y" AND X$<>"N" AND X$<>"n" THEN 575
+580 IF X$="Y" OR X$="y" THEN CLS:GOTO 550
+585 IF X$="N" OR X$="n" THEN 100
+600 CLS
+610 IF P=1 THEN 300
+620 ?:?:?"                         ARE YOU SURE TO END   Y/N ?"
+630 X$=INKEY$:IF X$="" THEN 630
+640 IF X$="N" OR X$="n" THEN 100
+650 CHDIR "D:\":COLOR 7,0:CLS:END
+700 ZZ=1
+705 CLS:
+710 ?:?"             READ AND CHANGE                          PAGE "ZZ" OF "Z
+715 ?"------------------------------------------------------------------------------"
+720 ?
+725 FOR I=1 TO 2
+730 ?" "I;
+735 PRINT D$(ZZ,I):?
+740 NEXT I
+745 ?"------------------------------------------------------------------------------"
+750 ?"           C=CHANGE        F1=>>          F2=<<        F5=PX        M=MENU"
+755 X$=INKEY$:IF X$="" THEN 755
+760 IF X$="V" AND ZZ<Z THEN ZZ=ZZ+1:GOTO 705
+761 IF X$="v" AND ZZ<Z THEN ZZ=ZZ+1:GOTO 705
+762 IF X$="V" AND ZZ=Z THEN ZZ=1:GOTO 705
+763 IF X$="v" AND ZZ=Z THEN ZZ=1:GOTO 705
+764 IF X$="R" AND ZZ>1 THEN ZZ=ZZ-1:GOTO 705
+765 IF X$="r" AND ZZ>1 THEN ZZ=ZZ-1:GOTO 705
+766 IF X$="R" AND ZZ=1 THEN ZZ=Z:GOTO 705
+767 IF X$="r" AND ZZ=1 THEN ZZ=Z:GOTO 705
+768 IF X$="C" OR X$="c"THEN 780
+770 IF X$="H" OR X$="h"THEN 850
+772 IF X$="M" OR X$="m"THEN 100
+775 GOTO 705
+780 ?:INPUT"       LINE # ";X
+785 IF X<1 OR X>2 THEN 780
+790 ?:INPUT"       NEW INPUT ";D$(ZZ,X)
+795 IF D$(ZZ,X)="" THEN D$(ZZ,X)="---"
+800 P=1
+805 GOTO 705
+850 ?:PRINT"       WHICH PAGE  (1 TO " Z ")";
+852 INPUT W
+853 IF W<1 OR W>Z THEN 850
+855 G=W-1
+860 ZZ=1
+870 ZZ=ZZ+G
+880 GOTO 705
+

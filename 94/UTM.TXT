@@ -1,0 +1,55 @@
+
+(KARTEN) DF9QM de DB0HBS>
+
+
+KARTEN @DL       de:DB1UQ  19.02.94 22:46 365   2755 Bytes
+!UTM-QTH-Koordinaten BASIC-PRG
+*** Bulletin-ID: 192413DB0GE ***
+
+940219/2234z DB0HB , 940219/2229z DK0MAV, 940219/2216z DB0KG 
+940219/2208z DB0EAM, 940219/2204z DB0SIF, 940219/2206z DB0SRS
+940219/2205z DB0MW , 940219/2206z DB0AIS, 940219/2201z DB0HOM
+940219/2154z DB0GE 
+de DB1UQ @ DB0GE.#SAR.DEU.EU
+to KARTEN @ DL
+
+REM Programm zur Umrechnung von UTM-Koordinaten in geographische Koordinaten
+REM z.B. zur Ermittlung des Standorts aus der Deutschen Generalkarte
+REM             Christoph Kessler DB1UQ @ DB0GE 19.2.1994
+REM Ein UTM-Gitternetz ist vor allem in den "Deutschen Generalkarten 1:200000"
+REM zu finden. Damit spart man den Kauf einer detaillierteren Topographischen
+REM Karte und das damit verbundene mÅhsame Peilen mittels Lineal auf die nur
+REM am Rand angebrachten Koordinaten. Das Gitternetz besteht aus Quadraten
+REM von 10 km SeitenlÑnge, d.h. 5mm entsprechen 1km, damit ist eine
+REM AbschÑtzung auf 100m (=0,5mm) mîglich. Auch eine GPS-Navigations-
+REM empfÑnger ist nicht genauer. Zwei Korrekturfaktoren fÅr die
+REM Breitengrade der BRD sind empirisch ermittelt:
+REM ZunÑchst eine lineare Abweichung von 19,73 km
+REM Die quadratische AbhÑngigkeit vom Abstand zum Mittelmeridian
+REM korrigiert einen Fehler von ca. 5 km auf den Grenzmeridianen
+REM Mit diesen beiden Korrekturen ergeben sich Abweichungen
+REM bei ca. 200 ausgemessenen Kartenpunkten von < 500m
+REM In dieser Basic-Version ist COS (2*PI)=1 , also nicht in Grad!
+REM Hier ist PI vordefiniert, sonst einfÅgen: PI=3.1415926
+REM bitte beides fÅr andere Basic-Dialekte nachprÅfen
+REM
+DEFDBL "A-Z": REM  nur fÅr Atari Omikron.Basic - Double Precision einstellen
+MM=9: REM  Mittelmeridian fÅr UTM-Zone 32, îstlich vom 12.LÑngengrad MM=15
+GRDPROKM=360/(2* PI *6370): REM         Grad pro km Erdumfang
+KORR1=19.73: REM                        Korrektur 1
+KORR2=9.359E-5: REM                     Korrektur 2
+INPUT "UTM-km zum équator (z.B. 5481.5 )          ";UB
+INPUT "UTM-km bezgl. Mittelmeridian (z.B. 465.6 )  ";UL
+UL=UL-500: REM                          Mittelmeridian entspricht "500km"
+GB=GRDPROKM*(UB+KORR1-(KORR2*UL*UL))
+GL=MM+(UL*GRDPROKM/ COS(2* PI *GB/360))
+PRINT "Geographische Breite:                       ";GB;"  Grad"
+PRINT "Geographische LÑnge:                         ";GL;" Grad"
+
+
+
+
+
+
+
+(KARTEN) DF9QM de DB0HBS>
